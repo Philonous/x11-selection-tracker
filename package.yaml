@@ -1,38 +1,8 @@
-# This YAML file describes your package. Stack will automatically generate a
-# Cabal file when you run `stack build`. See the hpack website for help with
-# this file: <https://github.com/sol/hpack>.
-benchmarks:
-  x11-clipboard-benchmarks:
-    dependencies:
-    - base
-    - x11-clipboard
-    - criterion
-    ghc-options:
-    - -rtsopts
-    - -threaded
-    - -with-rtsopts=-N
-    main: Main.hs
-    source-dirs: benchmark
-category: Other
-description: X11 clipboard interaction
-executables:
-  x11-clipboard:
-    dependencies:
-    - base
-    - x11-clipboard
-    ghc-options:
-    - -rtsopts
-    - -threaded
-    - -with-rtsopts=-N
-    main: Main.hs
-    source-dirs: app
-extra-source-files:
-- CHANGELOG.md
-- LICENSE.md
-- package.yaml
-- README.md
-- stack.yaml
-ghc-options: -Wall
+name: x11-selection-tracker
+synopsis: X11 selection interaction
+maintainer: Philipp Balzarek
+license: MIT
+
 library:
   dependencies:
   - base
@@ -40,24 +10,29 @@ library:
   - bytestring
   - mtl
   - containers
+  - exceptions
   - unordered-containers
   - aeson
+  - X11
+  - inline-c
+  - template-haskell
+  c-sources:
+    - src/Selection.c
   source-dirs: src
-license: MIT
-maintainer: Philipp Balzarek
-name: x11-clipboard
-synopsis: X11 clipboard interaction
-tests:
-  x11-clipboard-test-suite:
-    dependencies:
-    - base
-    - x11-clipboard
-    - tasty
-    - tasty-hspec
-    ghc-options:
-    - -rtsopts
-    - -threaded
-    - -with-rtsopts=-N
-    main: Main.hs
-    source-dirs: test-suite
-version: '0.0.0'
+  extra-libraries:
+    - Xfixes
+
+# tests:
+#   x11-selection-tracker-test-suite:
+#     dependencies:
+#     - base
+#     - x11-selection-tracker
+#     - tasty
+#     - tasty-hspec
+#     ghc-options:
+#     - -rtsopts
+#     - -threaded
+#     - -with-rtsopts=-N
+#     main: Main.hs
+#     source-dirs: test-suite
+# version: '0.0.0'
